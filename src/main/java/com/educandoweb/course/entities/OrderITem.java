@@ -7,46 +7,46 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 import com.educandoweb.course.entities.pk.OrderItemPk;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_order_item")
-public class OrderITem implements Serializable {
+public class OrderItem implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@EmbeddedId
-	private OrderItemPk id;
-	
+	private OrderItemPk id = new OrderItemPk();
+
 	private Integer quantity;
 	private Double price;
-	
-	
-	public OrderITem() {
+ 
+	public OrderItem() {
 	}
 
-	public OrderITem(Order order, Product product, Integer quantity, Double price) {
+	public OrderItem(Order order, Product product, Integer quantity, Double price) {
 		super();
 		id.setOrder(order);
 		id.setProduct(product);
 		this.quantity = quantity;
 		this.price = price;
 	}
-
+	@JsonIgnore
 	public Order getOrder() {
 		return id.getOrder();
 	}
-	
+
 	public void setOrder(Order order) {
 		id.setOrder(order);
 	}
-	
+
 	public Product getProduct() {
 		return id.getProduct();
 	}
-	
+
 	public void setProduct(Product product) {
 		id.setProduct(product);
 	}
-	
+
 	public Integer getQuantity() {
 		return quantity;
 	}
@@ -79,7 +79,7 @@ public class OrderITem implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		OrderITem other = (OrderITem) obj;
+		OrderItem other = (OrderItem) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -88,5 +88,4 @@ public class OrderITem implements Serializable {
 		return true;
 	}
 
-	
 }
